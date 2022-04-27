@@ -56,40 +56,32 @@
                     'id': 'cases-point',
                     'type': 'circle',
                     'source': 'covid-cases',
-                    'minzoom': 5,
+                    'minzoom': 3,
                     'paint': {
+                        'circle-color': '#8c96c6',
+                        'circle-stroke-width': 1,
+                        'circle-stroke-color': '#636363',
+                        'circle-opacity': 0.5,
                         'circle-radius': {
                             'property': 'cases',
                             'stops': [
-                                [{
-                                    zoom: 5,
-                                    value: grades[0]
-                                }, radii[0]],
-                                [{
-                                    zoom: 5,
-                                    value: grades[1]
-                                }, radii[1]],
-                                [{
-                                    zoom: 5,
-                                    value: grades[2]
-                                }, radii[2]]
+                                [10, 0.5],
+                                [40, 2],
+                                [100, 3.5],
+                                [300, 4],
+                                [600, 5]
                             ]
-                        },
-                        'circle-color': {
-                            'property': 'cases',
-                            'stops': [
-                                [grades[0], colors[0]],
-                                [grades[1], colors[1]],
-                                [grades[2], colors[2]]
-                            ]
-                        },
-                        'circle-stroke-color': 'white',
-                        'circle-stroke-width': 1,
-                        'circle-opacity': 0.6
+                        }
                     }
-                },
-                'waterway-label'
+                }
             );
+
+            map.on('click', 'cases-point', (event) => {
+                new mapboxgl.Popup()
+                    .setLngLat(event.features[0].geometry.coordinates)
+                    .setHTML(`<strong>Total Cases:</strong> ${event.features[0].properties.cases}`)
+                    .addTo(map);
+            });
         });
     </script>
 </body>

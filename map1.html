@@ -51,7 +51,7 @@
 
         #title-box {
             top: 0;
-            height: 100px;
+            height: 120px;
             margin-top: 20px;
             width: 250px;
         }
@@ -60,7 +60,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 110px;
+            width: 150px;
             background: #fff;
             margin-left: 20px;
             margin-bottom: 40px;
@@ -83,8 +83,8 @@
     <div id="map"></div>
     <div class="map-overlay" id="title-box">
         <h2>COVID Rates in the US by County 2020</h2>
-        <div id="subtitle">
-            <p>Text</p>
+        <div id="text-description">
+            <p>Map by Parker Mullen</p><p>Date: 4/26/2022</p><p>Data Sources: New York Times and US Census Bureau</p>
         </div>
     </div>
     <div class="map-overlay" id="legend"></div>
@@ -138,11 +138,13 @@
                 }
             });
 
-            map.on('click', 'rates-layer', (event) => {
-                new mapboxgl.Popup()
-                    .setLngLat(event.features[0].geometry.coordinates)
-                    .setHTML(`<strong>Rates:</strong> ${event.features[0].properties.rates}`)
-                    .addTo(map);
+            map.on('mousemove', ({point}) => {
+                const county = map.queryRenderedFeatures(point, {
+                    layers: ['rates-layer']
+            });
+            document.getElementById('text-description').innerHTML = county.length ?
+                `<h3>${county[0].properties.county}</h3><p><strong><em>${county[0].properties.rates}</strong> Cases/Population</em></p>` :
+                `<p>Map by Parker Mullen</p><p>Date: 4/26/2022</p><p>Data Sources: New York Times and US Census Bureau</p>`;
             });
         });
 
