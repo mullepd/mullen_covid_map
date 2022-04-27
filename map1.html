@@ -8,6 +8,19 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
     <style>
+        h2, h3 {
+            margin: 10px;
+            font-size: 18px;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px;
+        }
+        
         body {
             margin: 0;
             padding: 0;
@@ -17,21 +30,157 @@
             position: absolute;
             top: 0;
             bottom: 0;
+            left: 0;
+            right: 0;
             width: 100%;
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgba(0, 0, 0, 0.2);
+            margin-left: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
+        #title-box {
+            top: 0;
+            height: 100px;
+            margin-top: 20px;
+            width: 250px;
+        }
+
+        #legend {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 110px;
+            background: #fff;
+            margin-left: 20px;
+            margin-bottom: 40px;
+            padding: 10px 20px 10px 10px;
+            border-radius: 3px;
+            text-align: left;
+        }
+
+        .legend-key {
+            display: inline-block;
+            border-radius: 20%;
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
         }
     </style>
 </head>
 
 <body>
     <div id="map"></div>
+    <div class="map-overlay" id="title-box">
+        <h2>COVID Rates in the US by County 2020</h2>
+        <div id="subtitle">
+            <p>Text</p>
+        </div>
+    </div>
+    <div class="map-overlay" id="legend"></div>
+
     <script>
         mapboxgl.accessToken =
             'pk.eyJ1IjoibXVsbGVwZCIsImEiOiJjbDJhcXJ2eHcwN3lhM2tsaHY2OWJwaXM5In0.LkmFGu5dcDQA7Sf8XggggA';
         let map = new mapboxgl.Map({
             container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/dark-v10',
+            style: 'mapbox://styles/mapbox/light-v10',
             zoom: 4, // starting zoom
             center: [-101, 40] // starting center
+        });
+
+        map.on('load', () => { 
+
+            map.addSource('covid_rates', { 
+                type: 'geojson',
+                data: 'assets/us-covid-2020-rates.json'
+            });
+
+            map.addLayer({
+                'id': 'rates-layer',
+                'type': 'fill', 
+                'source': 'covid_rates',
+                'paint': {
+                    'fill-color': [
+                        'step', 
+                        ['get', 'rates'],
+                        '#edf8fb',   // symbology
+                        5,           // 1st class range: 0<=5
+
+                        '#bfd3e6',   // symbology
+                        14,          // 2nd class range: 5<=14
+
+                        '#9ebcda',   // symbology
+                        29,          // 3rd class range: 14<=29
+
+                        '#8c96c6',   // symbology
+                        60,          // 4th class range: 29<=60
+
+                        '#8856a7',   // symbology
+                        120,         // 5th class range: 60<=120
+
+                        '#810f7c',   // symbology
+                        500,         // 6th class range: 120<=500
+                        '#980043'
+                    ],
+                    'fill-outline-color': '#BBBBBB',
+                    'fill-opacity': 0.7,
+                }
+            });
+
+            map.on('click', 'rates-layer', (event) => {
+                new mapboxgl.Popup()
+                    .setLngLat(event.features[0].geometry.coordinates)
+                    .setHTML(`<strong>Rates:</strong> ${event.features[0].properties.rates}`)
+                    .addTo(map);
+            });
+        });
+
+        const layers = [
+            '0-5',
+            '6-14',
+            '15-29',
+            '30-60',
+            '61-120',
+            '121-500',
+            '500+'
+        ];
+
+        const colors = [
+            '#edf8fb70',
+            '#bfd3e670',
+            '#9ebcda70',
+            '#8c96c670',
+            '#8856a770',
+            '#810f7c70',
+            '#98004370'
+        ];
+
+        const legend = document.getElementById('legend');
+        legend.innerHTML = "<b>COVID Rates<br>(cases/population)</br></b>";
+
+        layers.forEach((layer, i) => {
+            const color = colors[i];
+            const item = document.createElement('div');
+            const key = document.createElement('span');
+            key.className = 'legend-key';
+            key.style.backgroundColor = color;
+
+            const value = document.createElement('span');
+            value.innerHTML = `${layer}`;
+            item.appendChild(key);
+            item.appendChild(value);
+            legend.appendChild(item);
         });
     </script>
 </body>
