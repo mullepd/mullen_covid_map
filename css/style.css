@@ -1,0 +1,146 @@
+h2, h3 {
+    margin: 10px;
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+p {
+    margin: 10px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.map-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+}
+
+#title-box {
+    top: 0;
+    height: 120px;
+    margin-top: 20px;
+    width: 250px;
+}
+
+#legend {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    background: #fff;
+    margin-left: 20px;
+    margin-bottom: 40px;
+    padding: 10px 20px 10px 10px;
+    border-radius: 3px;
+    text-align: left;
+}
+
+.legend-key {
+    display: inline-block;
+    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+h2, h3 {
+    margin: 10px;
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+p {
+    margin: 10px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.map-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+}
+
+#title-box {
+    top: 0;
+    height: 150px;
+    margin-top: 20px;
+    width: 250px;
+}
+
+#legend {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    background: #fff;
+    margin-left: 20px;
+    margin-bottom: 40px;
+    padding: 10px 20px 10px 10px;
+    border-radius: 3px;
+    text-align: left;
+}
+
+.break {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dot {
+    display: inline-block;
+    margin-top: 5px;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.dot-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
