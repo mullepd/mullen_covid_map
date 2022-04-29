@@ -99,7 +99,11 @@
             container: 'map', 
             style: 'mapbox://styles/mapbox/light-v10',
             zoom: 4, 
-            center: [-101, 40]
+            center: [-101, 40],
+            projection: {
+                name: 'albers',
+                center: [-101, 40]
+            }
         });
 
         map.on('load', () => { 

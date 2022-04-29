@@ -105,10 +105,14 @@
         mapboxgl.accessToken =
             'pk.eyJ1IjoibXVsbGVwZCIsImEiOiJjbDJhcXJ2eHcwN3lhM2tsaHY2OWJwaXM5In0.LkmFGu5dcDQA7Sf8XggggA';
         let map = new mapboxgl.Map({
-            container: 'map', // container ID
+            container: 'map',
             style: 'mapbox://styles/mapbox/dark-v10',
-            zoom: 4, // starting zoom
-            center: [-101, 40] // starting center
+            zoom: 4,
+            center: [-101, 40],
+            projection: {
+                name: 'albers',
+                center: [-101, 40]
+            }
         });
 
         const stops = [100, 500, 2000, 5000, 10000, 20000],
