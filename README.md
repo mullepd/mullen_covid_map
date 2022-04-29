@@ -1,5 +1,6 @@
 # 2020 Covid Maps
 **Parker Mullen**
+
 A map of 2020 covid rates and covid cases based on the [NY Times](https://github.com/nytimes/covid-19-data/blob/43d32dde2f87bd4dafbb7d23f5d9e878124018b8/live/us-counties.csv), and on the ACS [2018 5 year estimate](https://data.census.gov/cedsci/table?g=0100000US%24050000&d=ACS%205-Year%20Estimates%20Data%20Profiles&tid=ACSDP5Y2018.DP05&hidePreview=true).
 
 ### Map 1: COVID RATES
