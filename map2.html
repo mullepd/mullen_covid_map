@@ -58,7 +58,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 150px;
+            width: 170px;
             background: #fff;
             margin-left: 20px;
             margin-bottom: 40px;
@@ -77,7 +77,7 @@
             display: inline-block;
             margin-top: 5px;
             border-radius: 50%;
-            opacity: 0.8;
+            opacity: 1;
         }
 
         .dot-label {
@@ -115,9 +115,8 @@
             }
         });
 
-        const stops = [100, 500, 2000, 5000, 10000, 20000],
-            radius = [1, 2, 3.5, 5, 6.5, 8],
-            colors = ['rgb(237,248,233)', 'rgb(199,233,192)', 'rgb(161,217,155)', 'rgb(116,196,118)', 'rgb(49,163,84)', 'rgb(0,109,44)']
+        const radius = [2, 3, 5, 9, 14, 20, 27],
+            colors = ['#edf8e9', '#c7e9c0', '#a1d99b', '#74c476', '#41ab5d', '#238b45', '#005a32']
 
         map.on('load', () => {
             map.addSource('covid-cases', {
@@ -133,27 +132,31 @@
                     'paint': {
                         'circle-color': {
                             'property': 'cases',
+                            'type': 'interval',
                             'stops': [
-                                [100, '#edf8e9'],
-                                [500, '#c7e9c0'],
-                                [2000, '#a1d99b'],
-                                [5000, '#74c476'],
-                                [10000, '#31a354'],
-                                [20000, '#006d2c']
+                                [1000, '#edf8e9'],
+                                [5000, '#c7e9c0'],
+                                [10000, '#a1d99b'],
+                                [20000, '#74c476'],
+                                [50000, '#41ab5d'],
+                                [150000, '#238b45'],
+                                [500000, '#005a32']
                             ]
                         },
                         'circle-stroke-width': 1,
                         'circle-stroke-color': '#636363',
-                        'circle-opacity': 0.5,
+                        'circle-opacity': 0.6,
                         'circle-radius': {
                             'property': 'cases',
+                            'type': 'interval',
                             'stops': [
-                                [100, 1],
-                                [500, 2],
-                                [2000, 3.5],
-                                [5000, 5],
-                                [10000, 6.5],
-                                [20000, 8]
+                                [1000, 2],
+                                [5000, 3],
+                                [10000, 5],
+                                [20000, 9],
+                                [50000, 14],
+                                [150000, 20],
+                                [500000, 27]
                             ]
                         }
                     }
@@ -169,19 +172,20 @@
         });
 
         const layers = [
-            '0-100',
-            '101-500',
-            '501-2000',
-            '2001-5000',
-            '5001-10000',
-            '10001+'
+            '0-1,000',
+            '1,001-5,000',
+            '5,001-10,000',
+            '10,001-20,000',
+            '20,001-50,000',
+            '50,001-150,000',
+            '150,001-500,000'
         ]
 
         const legend = document.getElementById('legend');
         var labels = ['<strong>Total Cases by County</strong>'], vbreak;
         for (var i = 0; i < layers.length; i++) {
             vbreak = layers[i]
-            dot_radius = 2 * radius[i];
+            dot_radius = 1.5 * radius[i];
             labels.push(
                 '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: ' + dot_radius +
                 'px; height: ' +
